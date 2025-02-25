@@ -1,6 +1,5 @@
 const Express=require("express")
 const app=Express()
-const mongoose=require("./src/configs/Dbconfig")
 
 const PORT=process.env.PORT || 4060
 
