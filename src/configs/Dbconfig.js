@@ -1,10 +1,10 @@
 const mongoose=require("mongoose")
 
 require("dotenv").config()
+const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
+const Mongoose_url=process.env.MONGODB_LINK
 
-mongoose.connect(process.env.MONGODB_LINK,{
-    serverSelectionTimeoutMS:5000
-})
+mongoose.connect(Mongoose_url,clientOptions)
 
 mongoose.connection.on("connected",()=>{
     console.log("mongodb connected")
