@@ -1,14 +1,17 @@
 const Express=require("express")
 const app=Express()
 const QuestionPaper=require("./src/Routes/QuestionPaper")
-const mongoose=require("./src/configs/Dbconfig")
+const Notes=require("./src/Routes/Notes")
+const Message=require("./src/Routes/Message")
 const PORT=process.env.PORT || 4060
 
-app.get("/",(req,res)=>{
-    res.json({message:"hii "})
-})
+const bodyParser = require('body-parser') 
 
-app.use("/api/resource",QuestionPaper)
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use("/api/resource",QuestionPaper,Notes)
+app.use("/api",Message)
 
 app.listen(PORT,()=>{
     console.log(`Server Running on ${PORT}`)

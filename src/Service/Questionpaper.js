@@ -8,24 +8,28 @@ const getalldatakeys = async (key) => {
             return "Server is Busy"
         }
         else {
-            const responce = data.map((name) => {
-                if ((name.Sub_Name.tolowerlocal().trim()).include(key.tolowerlocal().trim())) {
+            const responcename = data.filter((name) => {
+                if (((name.Sub_Name).toLowerCase().replace(/ /g,"")).includes(key.toLowerCase().replace(/ /g,""))) {
                     return name.Sub_Name
                 }
-                else if ((name.Sub_Code.tolowerlocal().trim()).include(key.tolowerlocal().trim())) {
+            })
+            const responcecode = data.filter((name) => {
+                if (((name.Sub_Code).toLowerCase().replace(/ /g,"")).includes(key.toLowerCase().replace(/ /g,""))) {
                     return name.Sub_Code
                 }
             })
-            return responce
+            const code=responcecode.map((b)=>{return {"key":b.Sub_Code,"Sub":false}})
+            const name=responcename.map((b)=>{return {"key":b.Sub_Name,"Sub":true}})
+
+            return [...code,...name]
         }
     } catch (error) {
-        throw new Error(error)
-    }
+        console.log(error) }
 }
 
 const getsearchresult =async(searchdata) => {
     try {
-       const result=await Questionpaperp.find((searchdata.Sub)?{Sub_Name:searchdata.Sub}:{Sub_Code:searchdata.Code})
+       const result=await Questionpaperp.find((searchdata.Sub)?{Sub_Name:searchdata.key}:{Sub_Code:searchdata.key})
        if(!result){
            return "Not Found"
        }

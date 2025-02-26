@@ -1,13 +1,13 @@
 
-const QuestionPaperSchema = require("../Models/QuestionPaperSchema")
-const QuestionpaperService=require("../Service/Questionpaper")
+const Notes = require("../Models/NotesSchema")
+const NotesService=require("../Service/Notes")
 
 
 const getkeySearch=async(req,res)=>{
     try {
         const key=req.params["key"]
         console.log(key)
-        const responce=await QuestionpaperService.getalldatakeys(key)
+        const responce=await NotesService.getalldatakeys(key)
         console.log(responce)
         if(!responce.length) {
             res.status(404).json({message:"Result not found"})
@@ -23,7 +23,7 @@ const getkeySearch=async(req,res)=>{
 const getSearchresult=async(req,res)=>{
     try {
         const data=req.body
-        const responce=await QuestionpaperService.getsearchresult(data)
+        const responce=await NotesService.getsearchresult(data)
         if(typeof(responce)===Array){
             res.status(200).json({data:responce})
         }else{
@@ -39,7 +39,7 @@ const CreateQuestion=async(req,res)=>{
         const data=req.body
         console.log(data)
         for(let i=0;i<data.length;i++){
-           const responce=await new QuestionPaperSchema(data[i]).save() 
+           const responce=await new Notes(data[i]).save() 
         }
         res.json({message:"added"})
     } catch (error) {
